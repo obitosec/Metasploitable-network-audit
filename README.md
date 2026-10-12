@@ -37,13 +37,12 @@ Auditor Interface (Kali Linux)	Target Interface (Metasploitable 2)
 Phase 1: Subnet Host Discovery (Nmap)
 To map active devices on the /24 subnet without triggering security blocks, an ICMP/ARP sweep was executed from Kali Linux:   
 sudo nmap -sn 172.16.5.149/24
-# <img src="images/nmap-sweep .png" >
 Result: Discovered target host at 172.16.5.148 with MAC address 00:0C:29:92:9E:87 (VMware OUI).   
-
+<img src="images/nmap-sweep .png" alt="Nmap Host Discovery Sweep">
 Phase 2: Detailed Service & Version Enumeration
 A comprehensive service version scan was executed against the target to enumerate running daemons and build information:
 sudo nmap -sV -sC -p- 172.16.5.148
- # <img src="images/nmap-scan .png">
+ <img src="images/nmap-scan .png" alt="Nmap Host Discovery Sweep">
 ## 📊 High-Risk Findings & Vulnerability Inventory
 
 Deep service enumeration on host `172.16.5.148` identified multiple unencrypted protocols, legacy daemons, and unauthenticated listeners.
@@ -77,7 +76,7 @@ During an active administrative session over Telnet (Port 23), packet capture wa
 tcp.stream eq 3
 Key Traffic Findings:
 Cleartext Banner Leakage: The target host explicitly disclosed system parameters and OS details (metasploitable2, DISPLAY.kali:0.0) prior to authentication.   
-# <img src="images/wireshark-stream .png">
+<img src="images/wireshark-stream .png" alt="Wireshark Stream Analysis">
 Credential Sniffing: Administrative username and password inputs (msfadmin / msfadmin) were transmitted in cleartext ASCII across TCP stream 3.   
 
 Eavesdropping Risk: Any adversary positioned on the local segment can passively capture session payloads and compromise administrative credentials without brute-forcing.   
